@@ -1,0 +1,69 @@
+/* Tipos de Pokémon e suas cores associadas */
+.fire {
+  background-color: rgba(250, 0, 0, 0.7);
+}
+
+.bug {
+  background-color: rgba(189, 214, 27, 0.7);
+}
+
+.grass {
+  background-color: rgba(0, 100, 0, 0.7);
+}
+
+.water {
+  background-color: rgba(0, 0, 230, 0.7);
+}
+
+.normal {
+  background-color: rgba(210, 210, 210, 0.7);
+}
+
+.poison {
+  background-color: rgba(100, 0, 250, 0.7);
+}
+
+.electric {
+  background-color: rgba(250, 250, 0, 0.7);
+}
+
+.ground {
+  background-color: rgba(250, 220, 110, 0.7);
+}
+
+.fairy {
+  background-color: rgba(255, 192, 203, 0.7);
+}
+
+.fighting {
+  background-color: rgba(128, 0, 0, 0.7);
+}
+
+.psychic {
+  background-color: rgba(255, 105, 180, 0.7);
+}
+
+.rock {
+  background-color: rgba(139, 69, 19, 0.7);
+}
+
+.steel {
+  background-color: rgba(169, 169, 169, 0.7);
+}
+
+.ice {
+  background-color: rgba(135, 206, 235, 0.7);
+}
+
+.ghost {
+  background-color: rgba(139, 0, 139, 0.7);
+}
+
+.dragon {
+  background-color: rgba(138, 43, 226, 0.7);
+}
+
+.dark{
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+}
