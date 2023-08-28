@@ -25,6 +25,10 @@
   padding-bottom: 10px;
 }
 
+.name{
+  text-transform: capitalize;
+}
+
 .detail {
   display: flex;
   position: relative;
