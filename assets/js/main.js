@@ -19,50 +19,52 @@ window.addEventListener("scroll", () => {
 function cardPokemon(pkm) {
   //Pegamos os dados do pokemon e imprimimos no corpo do site
   return `<li class="pokemon ${pkm.type[0].type.name}">
-            <div class="top-pokemon"> <span class="name">${pkm.name}</span>
-                <span class="number">#${pkm.id}</span>
-            </div>
+  <header>
+        <span class="name">${pkm.name}</span>
+        <span class="number">#${pkm.id.toString().padStart(3, '0')}</span>
+    </header>
 
-            <div class="detail">
-                <ol class="types">
-                    ${pkm.type
-                      .map(
-                        (x) =>
-                          `<img class="type" src="./assets/img/type/${x.type.name}.png" alt="${x.type.name}" />`
-                      )
-                      .join("")}
-                </ol>
+  <div class="detail">
+      <ol class="types">
+          ${pkm.type
+            .map(
+              (x) =>
+                `<li>
+              <img class="type" src="./assets/img/type/${x.type.name}.png" alt="${x.type.name}" />
+          </li>`
+            )
+            .join("")}
+      </ol>
 
-                <img class="pokemon-img" src="${pkm.img}" alt="${pkm.name}" />
-            </div>                                          
-        </li>`;
+      <img class="pokemon-img" src="${pkm.img}" alt="${pkm.name}" />
+  </div>
+</li>`;
 }
 
 let acumulado = 0; // ele conta quantas vezes tivemos que fazer uma consulta de pokemon
 let telaCarregando = false; //informa se a tela está carregando ou não
 async function adicionaPokemonsAPokedex() {
-  
   // se a tela estiver no modo de carregando ele não executa a função para evitar bugs
   if (telaCarregando) {
     console.log("Carregando informações...");
     return;
-  } 
-  
+  }
+
   indicaTelaCaregando(); // Cria uma tela com uma animação de carregando
   //Faz a busca de varios pokemons e gera uma lista
   let pokemons = await getPokemons(50, 50 * acumulado);
 
   //Se tiver acabado a lista de pokemons ele faz um alert informado ao usuario
-  if(!pokemons.pokemons.length){
-    console.log("Acabou os pokemons")
+  if (!pokemons.pokemons.length) {
+    console.log("Acabou os pokemons");
     return;
   }
 
-  //Serve como um controle de loop, eu resolvi fazer tudo como onePage 
-  //então não vamos dividir isso em varias paginas, se o usuario quiser 
+  //Serve como um controle de loop, eu resolvi fazer tudo como onePage
+  //então não vamos dividir isso em varias paginas, se o usuario quiser
   //ver um pokemon especifico vai ter que pesquisar
   acumulado++;
-  
+
   //Criamos um card para cada pokemon que recebemos da API
   pokemons.pokemons.map((pkm) => {
     //Realizamos um loop que irá criar um card para cada pokemon
