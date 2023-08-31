@@ -8,7 +8,9 @@ export async function searchPokemon(pokemon) {
   }
 }
 
-export async function getPokemons(limit = 50, offset = 0) {
+//limit = numero de itens na lista
+//offset = pegar uma lista a partir do ID informado
+export async function getPokemons(limit = 50, offset = 0) { 
   try {
     let url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`;
 
