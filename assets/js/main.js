@@ -1,44 +1,28 @@
+import { cardPokemon } from "./cardPokemon.js";
 import { getPokemons } from "./fethPokemon.js";
 
+
 const $pokedex = document.querySelector(".pokemons");
+const $content = document.querySelector(".content");
 
 window.onload = function () {
   adicionaPokemonsAPokedex();
+  // while(window.innerHeight + window.scrollY >= document.body.offsetHeight && !telaCarregando)
+  //  console.log('tem espaço')
+  checkingScreen()
 };
 
 // Quando o usuario chegar no final da paginan entra no processo para carregar novos pokemons
-window.addEventListener("scroll", () => {
+window.addEventListener("scroll", checkingScreen);
+
+function checkingScreen() {
   const scrollPosition = window.scrollY;
   const windowHeight = window.innerHeight;
   const bodyHeight = document.body.scrollHeight;
+  console.log('scrollPosition > bodyHeight - windowHeight - 100', scrollPosition > bodyHeight - windowHeight - 100)
   if (scrollPosition > bodyHeight - windowHeight - 100) {
     adicionaPokemonsAPokedex();
   }
-});
-
-function cardPokemon(pkm) {
-  //Pegamos os dados do pokemon e imprimimos no corpo do site
-  return `<li class="pokemon ${pkm.type[0].type.name}">
-  <header>
-        <span class="name">${pkm.name}</span>
-        <span class="number">#${pkm.id.toString().padStart(3, '0')}</span>
-    </header>
-
-  <div class="detail">
-      <ol class="types">
-          ${pkm.type
-            .map(
-              (x) =>
-                `<li>
-              <img class="type" src="./assets/img/type/${x.type.name}.png" alt="${x.type.name}" />
-          </li>`
-            )
-            .join("")}
-      </ol>
-
-      <img class="pokemon-img" src="${pkm.img}" alt="${pkm.name}" />
-  </div>
-</li>`;
 }
 
 let acumulado = 0; // ele conta quantas vezes tivemos que fazer uma consulta de pokemon
@@ -50,9 +34,9 @@ async function adicionaPokemonsAPokedex() {
     return;
   }
 
-  indicaTelaCaregando(); // Cria uma tela com uma animação de carregando
+  loadingScreen(); // Cria uma tela com uma animação de carregando
   //Faz a busca de varios pokemons e gera uma lista
-  let pokemons = await getPokemons(50, 50 * acumulado);
+  let pokemons = await getPokemons(25, 25 * acumulado);
 
   //Se tiver acabado a lista de pokemons ele faz um alert informado ao usuario
   if (!pokemons.pokemons.length) {
@@ -68,30 +52,31 @@ async function adicionaPokemonsAPokedex() {
   //Criamos um card para cada pokemon que recebemos da API
   pokemons.pokemons.map((pkm) => {
     //Realizamos um loop que irá criar um card para cada pokemon
-    $pokedex.innerHTML += cardPokemon({
-      id: pkm.id,
-      name: pkm.name,
-      type: pkm.types,
-      img: pkm["sprites"]["versions"]["generation-v"]["black-white"][
-        "animated"
-      ]["front_default"],
-    });
+    $pokedex.appendChild(
+      cardPokemon({
+        id: pkm.id,
+        name: pkm.name,
+        type: pkm.types,
+        img: pkm["sprites"]["versions"]["generation-v"]["black-white"][
+          "animated"
+        ]["front_default"],
+      })
+    );
   });
-
-  indicaTelaCaregando(); // Remove a tela de carregando depois de executado todo o processo
+  loadingScreen(); // Remove a tela de carregando depois de executado todo o processo
+  checkingScreen(); //Verifica se a tela está 100% preenchida
 }
 
-function indicaTelaCaregando() {
+function loadingScreen() {
   telaCarregando = !telaCarregando;
   //se estiver carregando as informações ainda ele adiciona a tela de load
   if (telaCarregando) {
     let load = document.createElement("div");
     load.classList.add("loading");
     load.innerHTML = '<img src="./assets/img/loading.gif" >';
-    document.querySelector("body").appendChild(load);
+    $content.appendChild(load);
   } else {
-    document
-      .querySelector("body")
-      .removeChild(document.querySelector(".loading"));
+    while (document.querySelector(".loading"))
+      $content.removeChild(document.querySelector(".loading"));
   }
 }

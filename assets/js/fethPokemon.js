@@ -5,6 +5,7 @@ export async function searchPokemon(pokemon) {
     const response = await fetch(url); //faz o get dos dados do pokemon
     return await response.json(); //retorna um Json
   } catch (error) {
+    console.log('error: ', error)
   }
 }
 
