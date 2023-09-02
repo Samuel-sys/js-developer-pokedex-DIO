@@ -46,7 +46,7 @@
   justify-content: space-around;
 }
 
-.pokemon .detail .types .type {
+/*.pokemon .detail .types*/ .type {
   width: 100px;
   border-radius: 15px;
 }
