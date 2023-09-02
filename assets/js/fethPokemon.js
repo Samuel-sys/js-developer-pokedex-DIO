@@ -31,3 +31,24 @@ export async function getPokemons(limit = 50, offset = 0) {
     return { status: `Pokemon não encontrado` };
   }
 }
+
+export async function getTypePokemons(type) { 
+  try {
+    let url = `https://pokeapi.co/api/v2/type/${type}`;
+
+    const response = await fetch(url); //faz o get dos dados do pokemon
+    const data = await response.json(); //retorna um Json
+
+    return {
+      pokemons: await Promise.all(
+        data.pokemon.map(async (pokemon) => {
+          return await searchPokemon(pokemon.pokemon.name);
+        })
+      ),
+      count: data.pokemon.length,
+    };
+  } catch (error) {
+    //Caso o pokemon não exista retornamos um objeto informando que o pokemon não existe ou não foi encontrado
+    return { status: `Pokemon não encontrado` };
+  }
+}

@@ -1,3 +1,5 @@
+import { resetPokemons } from "./main.js";
+
 export function cardPokemon(pkm) {
   //criando o elemento DOM
   const $card = document.createElement("li");
@@ -62,7 +64,7 @@ function __types(types) {
     $type.appendChild($img);
 
     //Evento quando a pessoa clica no icon do tipo do pokemon
-    $img.addEventListener("click", () => window.alert(x.type.name));
+    $img.addEventListener("click", () => resetPokemons(x.type.name));
 
     $result.appendChild($type);
   });
